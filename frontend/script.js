@@ -1,8 +1,8 @@
 // API Configuration
-// Automatically use current origin in production (Railway), or localhost:8000 for local dev
+// Automatically use production backend URL or localhost for development
 const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:'
     ? 'http://127.0.0.1:8000'
-    : window.location.origin;
+    : 'https://todo-app658.up.railway.app';
 const CACHE_KEY = 'todo_tasks_cache';
 const DARK_MODE_KEY = 'dark_mode_enabled';
 
@@ -126,7 +126,7 @@ async function fetchTasks(params = {}) {
         if (params.sort_by) queryParams.append('sort_by', params.sort_by);
         if (params.order) queryParams.append('order', params.order);
         
-        const response = await fetch(`${API_BASE_URL}/tasks?${queryParams}`);
+        const response = await fetch(`${API_BASE_URL}/tasks/?${queryParams}`);
         if (!response.ok) throw new Error('Failed to fetch tasks');
         
         const data = await response.json();
