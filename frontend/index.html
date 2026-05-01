@@ -1,145 +1,228 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TODO List - Task Manager</title>
+    <title>TODO List - Premium Task Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header>
-            <h1>📝 TODO List</h1>
-            <button id="darkModeToggle" class="icon-btn" title="Toggle Dark Mode">🌙</button>
-        </header>
+    <!-- Background Elements for Premium Look -->
+    <div class="bg-glow top-left"></div>
+    <div class="bg-glow bottom-right"></div>
 
-        <!-- Task Statistics -->
-        <div class="stats-container">
-            <div class="stat-card">
-                <div class="stat-value" id="totalTasks">0</div>
-                <div class="stat-label">Total Tasks</div>
+    <div class="app-container">
+        <!-- Top Navigation -->
+        <nav class="navbar glass">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                    <path d="m9 12 2 2 4-4"></path>
+                </svg>
+                <span>TODO</span>
             </div>
-            <div class="stat-card">
-                <div class="stat-value" id="completedTasks">0</div>
-                <div class="stat-label">Completed</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="pendingTasks">0</div>
-                <div class="stat-label">Pending</div>
-            </div>
-            <div class="stat-card progress-card">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
+            <button id="darkModeToggle" class="icon-btn" title="Toggle Theme">
+                <svg id="moonIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                <svg id="sunIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+        </nav>
+
+        <main class="main-content">
+            <!-- Dashboard / Stats -->
+            <section class="dashboard">
+                <div class="stat-card glass-panel">
+                    <div class="stat-header">
+                        <span class="stat-title">Total Tasks</span>
+                        <div class="stat-icon purple">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="totalTasks">0</div>
                 </div>
-                <div class="stat-label" id="completionRate">0% Complete</div>
-            </div>
-        </div>
-
-        <!-- Add Task Form -->
-        <div class="add-task-section">
-            <h2>Add New Task</h2>
-            <form id="addTaskForm">
-                <div class="form-row">
-                    <input type="text" id="taskTitle" placeholder="Task title *" required>
-                    <select id="taskPriority">
-                        <option value="LOW">Low Priority</option>
-                        <option value="MEDIUM" selected>Medium Priority</option>
-                        <option value="HIGH">High Priority</option>
-                    </select>
+                
+                <div class="stat-card glass-panel">
+                    <div class="stat-header">
+                        <span class="stat-title">Completed</span>
+                        <div class="stat-icon green">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="completedTasks">0</div>
                 </div>
-                <div class="form-row">
-                    <input type="date" id="taskDueDate">
-                    <button type="submit" class="btn btn-primary">Add Task</button>
+                
+                <div class="stat-card glass-panel">
+                    <div class="stat-header">
+                        <span class="stat-title">Pending</span>
+                        <div class="stat-icon yellow">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="pendingTasks">0</div>
                 </div>
-                <textarea id="taskDescription" placeholder="Task description (optional)" rows="2"></textarea>
-            </form>
-        </div>
 
-        <!-- Filters and Search -->
-        <div class="controls-section">
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="🔍 Search tasks...">
-            </div>
-            <div class="filters">
-                <select id="statusFilter">
-                    <option value="all">All Tasks</option>
-                    <option value="pending">Pending</option>
-                    <option value="completed">Completed</option>
-                </select>
-                <select id="priorityFilter">
-                    <option value="">All Priorities</option>
-                    <option value="HIGH">High</option>
-                    <option value="MEDIUM">Medium</option>
-                    <option value="LOW">Low</option>
-                </select>
-                <select id="sortBy">
-                    <option value="created_at">Sort by Created</option>
-                    <option value="due_date">Sort by Due Date</option>
-                    <option value="priority">Sort by Priority</option>
-                </select>
-            </div>
-        </div>
+                <div class="stat-card glass-panel progress-panel">
+                    <div class="stat-header">
+                        <span class="stat-title">Progress</span>
+                        <span class="stat-title highlight" id="completionRate">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progressFill"></div>
+                    </div>
+                </div>
+            </section>
 
-        <!-- Tasks List -->
-        <div class="tasks-section">
-            <h2>Your Tasks</h2>
-            <div id="tasksList" class="tasks-list">
-                <!-- Tasks will be rendered here -->
-            </div>
-            <div id="emptyState" class="empty-state">
-                <p>No tasks yet. Add your first task above! 🚀</p>
-            </div>
-        </div>
+            <!-- Add Task Form -->
+            <section class="add-task-section glass-panel">
+                <form id="addTaskForm" class="task-form">
+                    <div class="form-body">
+                        <div class="input-wrapper floating-input">
+                            <input type="text" id="taskTitle" placeholder=" " required autocomplete="off">
+                            <label for="taskTitle">What needs to be done?</label>
+                            <div class="input-border"></div>
+                        </div>
+                        
+                        <div class="form-controls">
+                            <div class="priority-selector">
+                                <label class="priority-option">
+                                    <input type="radio" name="taskPriority" value="LOW">
+                                    <span class="priority-pill low">Low</span>
+                                </label>
+                                <label class="priority-option">
+                                    <input type="radio" name="taskPriority" value="MEDIUM" checked>
+                                    <span class="priority-pill medium">Medium</span>
+                                </label>
+                                <label class="priority-option">
+                                    <input type="radio" name="taskPriority" value="HIGH">
+                                    <span class="priority-pill high">High</span>
+                                </label>
+                            </div>
+                            
+                            <div class="date-selector">
+                                <input type="date" id="taskDueDate">
+                            </div>
+                            
+                            <button type="submit" class="btn-primary">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                Add Task
+                            </button>
+                        </div>
+                        
+                        <div class="input-wrapper secondary-input">
+                            <textarea id="taskDescription" placeholder="Add a description (optional)" rows="1"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Filters -->
+            <section class="filters-section glass-panel">
+                <div class="search-box">
+                    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="searchInput" placeholder="Search tasks...">
+                </div>
+                <div class="filters">
+                    <div class="select-wrapper">
+                        <select id="statusFilter">
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                        <svg class="dropdown-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                    <div class="select-wrapper">
+                        <select id="priorityFilter">
+                            <option value="">All Priorities</option>
+                            <option value="HIGH">High</option>
+                            <option value="MEDIUM">Medium</option>
+                            <option value="LOW">Low</option>
+                        </select>
+                        <svg class="dropdown-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                    <div class="select-wrapper">
+                        <select id="sortBy">
+                            <option value="created_at">Sort by Created</option>
+                            <option value="due_date">Sort by Due Date</option>
+                            <option value="priority">Sort by Priority</option>
+                        </select>
+                        <svg class="dropdown-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Task List -->
+            <section class="tasks-section">
+                <div id="tasksList" class="tasks-container">
+                    <!-- Tasks injected by JS -->
+                </div>
+                
+                <div id="emptyState" class="empty-state hidden">
+                    <div class="empty-illustration">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    </div>
+                    <h3>No tasks found</h3>
+                    <p>You're all caught up! Add a new task above.</p>
+                </div>
+            </section>
+        </main>
     </div>
 
     <!-- Edit Task Modal -->
     <div id="editModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content glass-panel">
             <div class="modal-header">
                 <h2>Edit Task</h2>
-                <button class="close-btn" id="closeModal">&times;</button>
+                <button class="icon-btn close-btn" id="closeModal">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
             </div>
             <form id="editTaskForm">
                 <input type="hidden" id="editTaskId">
                 <div class="form-group">
-                    <label>Title *</label>
-                    <input type="text" id="editTaskTitle" required>
+                    <label>Title</label>
+                    <input type="text" id="editTaskTitle" class="modal-input" required>
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea id="editTaskDescription" rows="3"></textarea>
+                    <textarea id="editTaskDescription" class="modal-input" rows="3"></textarea>
                 </div>
-                <div class="form-row">
+                <div class="form-row modal-row">
                     <div class="form-group">
                         <label>Priority</label>
-                        <select id="editTaskPriority">
-                            <option value="LOW">Low</option>
-                            <option value="MEDIUM">Medium</option>
-                            <option value="HIGH">High</option>
-                        </select>
+                        <div class="select-wrapper">
+                            <select id="editTaskPriority" class="modal-input">
+                                <option value="LOW">Low</option>
+                                <option value="MEDIUM">Medium</option>
+                                <option value="HIGH">High</option>
+                            </select>
+                            <svg class="dropdown-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Due Date</label>
-                        <input type="date" id="editTaskDueDate">
+                        <input type="date" id="editTaskDueDate" class="modal-input">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="editTaskCompleted">
-                        Mark as completed
-                    </label>
-                </div>
+                <label class="custom-checkbox modal-checkbox">
+                    <input type="checkbox" id="editTaskCompleted">
+                    <span class="checkmark">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </span>
+                    <span class="checkbox-label">Mark as completed</span>
+                </label>
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" id="cancelEdit">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn-secondary" id="cancelEdit">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Changes</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="toast"></div>
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
 
     <script src="script.js"></script>
 </body>
