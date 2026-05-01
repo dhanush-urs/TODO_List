@@ -1,5 +1,8 @@
 // API Configuration
-const API_BASE_URL = 'http://127.0.0.1:8000';
+// Automatically use current origin in production (Railway), or localhost:8000 for local dev
+const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:'
+    ? 'http://127.0.0.1:8000'
+    : window.location.origin;
 const CACHE_KEY = 'todo_tasks_cache';
 const DARK_MODE_KEY = 'dark_mode_enabled';
 
